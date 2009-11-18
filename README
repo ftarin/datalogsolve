@@ -1,0 +1,17 @@
+DATALOG_SOLVE is a new static analyzer which implements a powerful, fully 
+automatable method to evaluate Datalog queries by using Boolean Equation 
+Systems (BESs).
+
+The webpage can be reached at:
+	http://safe-tools.dsic.upv.es/datalog/
+
+To build the software just enter at first_version or optimized_version
+and do:
+	# make clean; make
+
+In order to build the software CADP (http://www.inrialpes.fr/vasy/cadp)
+must be properly installed.
+
+For any further information check:
+	 http://safe-tools.dsic.upv.es/datalog/?page_id=27
+
