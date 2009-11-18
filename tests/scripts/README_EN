@@ -1,0 +1,6 @@
+The script run.sh executes the tests for every solver and with the collected data
+creates a graph stored at resultado.eps.
+By default the script gets the data from ../data and stores the result at ../results
+this can be changed editing the generator scripts.
+If the binaries of the solvers aren't in the path every generator script must be
+edited to add the binaries' path 

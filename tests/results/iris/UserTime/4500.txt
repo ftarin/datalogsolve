@@ -1,0 +1,21 @@
+Test 1
+
+real 23.76
+user 22.99
+sys 0.49
+
+
+Test 2
+
+real 23.60
+user 22.96
+sys 0.46
+
+
+Test 3
+
+real 23.71
+user 23.02
+sys 0.44
+
+

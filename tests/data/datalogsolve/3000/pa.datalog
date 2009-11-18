@@ -1,0 +1,13 @@
+### DOMAINS
+V 23 var.map
+H 4 heap.map
+
+### RELATIONS
+vP0	(variable: V, heap: H) inputtuples
+A	(dest: V, source: V)   inputtuples
+vP	(variable: V, heap: H) outputtuples
+
+### RULES
+vP (v,h) :- vP0(v,h).
+vP (v1,h) :- A(v1,v2), vP(v2,h).
+

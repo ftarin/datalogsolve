@@ -1,0 +1,72 @@
+#! /bin/bash
+
+# Tell the script where is the xsb binary
+XSB_BIN_PATH=""
+PATH=${PATH}:$XSB_BIN_PATH
+
+# Path where data is found
+# Tell the script where is the data
+DATA_PATH="$PWD/../../../data/xsb"
+
+# Results directory
+RESULTS="$PWD/../../../results/xsb"
+
+if test $# -ne 1
+then
+	echo "Usage: $0 number of repetitions"
+else
+	# Check for the binary in the path 
+	if [ $(which xsb | wc -l) -eq 0 ]; then
+		echo "Error: xsb binary not found please add it to the PATH"
+		exit 1
+	fi
+	
+	# Manage directories
+	rm -rf $RESULTS/Time		
+	rm -rf $RESULTS/UserTime
+	rm -rf $RESULTS/results.time
+
+	mkdir -p $RESULTS/Time/
+	mkdir -p $RESULTS/UserTime/
+	
+	echo "0 0" >> $RESULTS/results.time
+
+	echo "Scanning dir ${DATA_PATH}"
+	# Change this to scan all *.pl files in dict
+	FILES=$(ls ${DATA_PATH}/*.pl)
+
+	if [ $(echo $FILES | wc -w) -eq 0 ]; then
+		echo "$FULL_PATH doesn't contain useful data exiting"
+		exit 1
+	fi
+	
+	rm -f $DATA_PATH/*.xwam	
+		
+	for j in $FILES
+	do
+		file=$(basename $j .pl)
+		TIME_DIR=$RESULTS/Time/
+		USER_TIME_DIR=$RESULTS/UserTime/
+			
+		# Execute the solver
+		for (( i = 1; i <= $1; i++ ))
+		do
+			echo "Test $i">> $TIME_DIR/$file.txt
+			echo "Test $i">> $USER_TIME_DIR/$file.txt
+			{ time -p echo "['$j']. time(run(X)). \r halt." | xsb | grep "seconds" >> $TIME_DIR/$file.txt; } 2>> $USER_TIME_DIR/$file.txt
+			echo -ne "\n\n" >> $TIME_DIR/$file.txt
+			echo -ne "\n\n" >> $USER_TIME_DIR/$file.txt
+			echo "Calculated the test $i of the file $j"
+		done
+
+		# Extract the time
+		echo "Storing result at ${file}.time"
+		tmp_time=$(cat ${USER_TIME_DIR}/$file.txt | grep -i user | cut -d " " -f 2 | xargs | tr " " "+" | bc)
+		time=$(echo "scale=3; ${tmp_time} / $1" | bc)
+		echo "${file} ${time}" > $USER_TIME_DIR/${file}.time
+		echo "${file} ${time}" >> $USER_TIME_DIR/../results.time
+	done
+	
+	rm -f $DATA_PATH/*.xwam
+	rm -f xsb.output
+fi

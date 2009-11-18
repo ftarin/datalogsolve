@@ -1,0 +1,66 @@
+#!/bin/bash
+
+# Tell the script where is the maude binary
+MAUDE_BIN_PATH=""
+PATH=${PATH}:$MAUDE_BIN_PATH
+
+# Path where data is found
+# This scheme can also be used to make all tests at once
+# Ej -> Full path: /sets/loop-free/100
+# DATA_PATH => /sets/loop-free/
+# REPS => 100
+
+# Tell the script where is the data
+DATA_PATH="$HOME/datalaude/results/loop-free/tests/datalaude/"
+
+# Tell the script which directory reps will be used to complete the path
+REPS="100 150 200 400 800"
+
+# Results directory
+RESULTS="$HOME/Solvers/Results/DataLaude"
+
+if test $# -ne 1
+then
+	echo "Usage: $0 number of repetitions"
+else
+	# Check for the binary in the path 
+	if [ $(which maude.linux | wc -l) -eq 0 ]; then
+		echo "Error: maude.linux binary not found please add it to the PATH"
+		exit 1
+	fi
+	
+	# Remove old directories
+	rm -rf $RESULTS/Time		
+	rm -rf $RESULTS/UserTime
+	rm -rf $RESULTS/results.time
+
+	for dir in $REPS; do
+		# Create the direcotory with the tests
+		FULL_PATH=${DATA_PATH}${dir}
+
+		mkdir -p $RESULTS/Time/$dir/
+		mkdir -p $RESULTS/UserTime/$dir/
+
+		echo "Scanning dir $FULL_PATH"
+		
+		file=$dir
+		TIME_DIR=$RESULTS/Time/$dir/
+		USER_TIME_DIR=$RESULTS/UserTime/$dir/
+			
+		for (( i = 1; i <= $1; i++ ))
+		do
+			echo "Test $i">> $TIME_DIR/$file.txt
+			echo "Test $i">> $USER_TIME_DIR/$file.txt
+			{ time -p maude.linux $FULL_PATH/kk | grep "rewrites" >> $TIME_DIR/$file.txt; } 2>> $USER_TIME_DIR/$file.txt
+			echo "Calculated the test $i of the file $file"
+			echo -en "\n\n" >> $TIME_DIR/$file.txt
+			echo -en "\n\n" >> $USER_TIME_DIR/$file.txt
+		done
+
+		echo "Storing result at ${file}.time"
+		tmp_time=$(cat ${USER_TIME_DIR}/$dir.txt | grep -i user | cut -d " " -f 2 | xargs | tr " " "+" | bc)
+		time=$(echo "scale=3; ${tmp_time} / $1" | bc)
+		echo "${dir} ${time}" > $USER_TIME_DIR/${file}.time
+		echo "${dir} ${time}" >> $USER_TIME_DIR/../../results.time
+	done
+fi

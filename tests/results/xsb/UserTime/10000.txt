@@ -1,0 +1,50 @@
+Test 1
+[xsb_configuration loaded]
+[sysinitrc loaded]
+
+XSB Version 3.2 (Kopi Lewak) of March 15, 2009
+[i686-pc-linux-gnu; mode: optimal; engine: slg-wam; scheduling: local; word size: 32]
+
+[Compiling /home/nando/datalogsolve/tests/data/xsb/10000]
+[10000 compiled, cpu time used: 2.2040 seconds]
+[10000 loaded]
+
+
+End XSB (cputime 3.28 secs, elapsetime 3.49 secs)
+real 3.66
+user 3.35
+sys 0.22
+
+
+Test 2
+[xsb_configuration loaded]
+[sysinitrc loaded]
+
+XSB Version 3.2 (Kopi Lewak) of March 15, 2009
+[i686-pc-linux-gnu; mode: optimal; engine: slg-wam; scheduling: local; word size: 32]
+
+[10000 loaded]
+
+
+End XSB (cputime 1.08 secs, elapsetime 1.16 secs)
+real 1.34
+user 1.16
+sys 0.15
+
+
+Test 3
+[xsb_configuration loaded]
+[sysinitrc loaded]
+
+XSB Version 3.2 (Kopi Lewak) of March 15, 2009
+[i686-pc-linux-gnu; mode: optimal; engine: slg-wam; scheduling: local; word size: 32]
+
+[10000 loaded]
+
+
+End XSB (cputime 1.11 secs, elapsetime 1.17 secs)
+real 1.35
+user 1.19
+sys 0.12
+
+

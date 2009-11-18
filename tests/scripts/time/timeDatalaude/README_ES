@@ -1,0 +1,13 @@
+1. Ubicar en la carpeta timeDatalaude/Files los directorios con los ficheros de prueba
+2. Ejecutar "./scriptTimeDatalaude" (puede que necesite permisos de ejecución)
+3. Los ficheros se generan en ./Time
+
+Nota:
+
+Dependiendo de la instalación, quizás sea neceario sustituir la linea
+
+maude.linux $j/kk | grep "rewrites" >> ./Time/$fichero.txt;
+
+por
+
+maude $j/kk | grep "rewrites" >> ./Time/$fichero.txt;

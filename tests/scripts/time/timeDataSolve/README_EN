@@ -1,0 +1,4 @@
+1. Edit the script "./scriptTimeDatalaude" and tell needed directory paths 
+   binaries, data and results, by default data and results are set.
+
+The script must have execute permissions 

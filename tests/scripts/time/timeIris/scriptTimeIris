@@ -1,0 +1,67 @@
+#!/bin/bash
+
+# Tell the script where is the data
+DATA_PATH="$PWD/../../../data/iris"
+
+# Results directory
+RESULTS="$PWD/../../../results/iris"
+
+if test $# -ne 1
+then
+	echo "Usage: $0 number of repetitions"
+else
+	rm -rf *.temp
+	# Remove old directories
+	rm -rf $RESULTS/Time		
+	rm -rf $RESULTS/UserTime
+	rm -rf $RESULTS/results.time
+
+	# Create new directories
+	mkdir -p $RESULTS/Time	
+	mkdir -p $RESULTS/UserTime
+	
+	echo "0 0" >> $RESULTS/results.time
+	
+	echo "Scanning dir $DATA_PATH"
+	# Change this to scan all *.iris files in dict
+	FILES=$(ls $DATA_PATH/*.iris)
+	
+	if [ $(echo $FILES | wc -w) -eq 0 ]; then
+		echo "$DATA_PATH doesn't contain useful data exiting"
+		exit 1
+	fi
+	
+	for k in $FILES
+	do
+		file=$(basename $k .iris)
+		echo "#!/bin/bash" >> ./$file.temp
+		cat $k >> ./$file.temp
+		chmod +x ./$file.temp
+	done
+	
+	TIME_DIR=$RESULTS/Time/$dir/
+	USER_TIME_DIR=$RESULTS/UserTime/$dir/
+	
+	for j in *.temp
+	do
+		for i in $(seq $1)
+		do
+			file=$(echo $j | awk -F. '{print $1}')
+			echo "Test $i">> $TIME_DIR/$file.txt
+			echo "Test $i">> $USER_TIME_DIR/$file.txt
+			echo >> $TIME_DIR/$file.txt
+			echo >> $USER_TIME_DIR/$file.txt
+			{ time -p ./$file.temp | grep "Query" >> $TIME_DIR/$file.txt; } 2>> /dev/stdout |  tail -n 3 >> $USER_TIME_DIR/$file.txt
+			echo -ne "\n\n" >> $TIME_DIR/$file.txt
+			echo -ne "\n\n" >> $USER_TIME_DIR/$file.txt
+			echo "Calculated the test $i of the file $j"
+		done
+		
+		echo "Storing result at ${file}.time"
+		tmp_time=$(cat ${USER_TIME_DIR}/$file.txt | grep -i user | cut -d " " -f 2 | xargs | tr " " "+" | bc)
+		time=$(echo "scale=3; ${tmp_time} / $1" | bc)
+		echo "$file ${time}" > $USER_TIME_DIR/${file}.time
+		echo "$file ${time}" >> $USER_TIME_DIR/../results.time
+	done
+	rm *.temp
+fi

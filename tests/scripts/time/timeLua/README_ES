@@ -1,0 +1,5 @@
+1. Editar el script "./scriptTimeDatalaude" e indicar las rutas necesarias
+   binarios, datos y resultados, por defecto datos y resultados ya están
+   colocados.
+
+Nota: El fichero debe tener permisos de ejecución

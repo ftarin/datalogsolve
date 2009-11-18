@@ -1,0 +1,200 @@
+58: Character.java:1076 ConcreteString[] @ 619
+104: Pattern.java:5642 ConcreteString @ 435
+153: JavaParserTokenManager.java:1791 ConcreteString @ 1729
+145: FileSystem.java:222 ConcreteString @ 5
+20: StandardCharsets.java:19 ConcreteString @ 37
+34: JavaParserTokenManager.java:1791 ConcreteString @ 1725
+50: Character.java:1017 ConcreteString @ 536
+43: JavaParserTokenManager.java:1791 ConcreteString @ 1697
+23: StandardCharsets.java:41 ConcreteString @ 73
+168: ObjectHeapByteBuffer @ -1
+83: Objectbyte[] @ -1
+103: JavaParserTokenManager.java:1791 ConcreteString @ 1693
+73: Pattern.java:5644 ConcretePattern$Range @ 447
+115: TimeUnit.java:40 ConcreteTimeUnit @ 17
+55: InetAddress.java:822 ConcreteInetAddressImplFactory @ 45
+200: AttributedCharacterIterator.java:141 ConcreteAttributedCharacterIterator$Attribute @ 7
+56: JavaParserTokenManager.java:1791 ConcreteString @ 1689
+117: StandardCharsets.java:19 ConcreteString @ 13
+26: ThreadPoolExecutor.java:277 ConcreteClass @ 2
+174: DecimalFormat.java:357 ConcreteClass @ 2
+61: TimeUnit.java:40 ConcreteString @ 14
+118: DateFormat.java:907 ConcreteString @ 132
+188: DateFormat.java:881 ConcreteDateFormat$Field @ 100
+68: AttributedCharacterIterator.java:141 ConcreteString @ 10
+69: InetAddressCachePolicy.java:124 ConcreteString @ 65
+90: BigInteger.java:2982 Concreteint[] @ 2632
+126: Character.java:1046 ConcreteCharacter$UnicodeBlock @ 566
+153: InetAddress.java:214 ConcreteLoadLibraryAction @ 20
+182: StandardCharsets.java:46 ConcreteString @ 95
+17: ObjectBufferedWriter @ -1
+109: JavaParserTokenManager.java:1791 ConcreteString @ 1689
+155: FileSystem.java:224 ConcreteString @ 9
+103: JavaParserTokenManager.java:1791 ConcreteString @ 1705
+143: StandardCharsets.java:41 ConcreteString[] @ 69
+106: Character.java:1038 ConcreteString[] @ 553
+108: Debug.java:25 ConcreteString @ 4
+143: StandardCharsets.java:46 ConcreteString @ 91
+8: Objectnull @ -1
+81: Debug.java:25 ConcreteString @ 4
+59: StandardCharsets.java:36 ConcreteString @ 67
+93: StandardCharsets.java:36 ConcreteString[] @ 59
+77: ThreadPoolExecutor.java:277 ConcreteClass @ 2
+157: DontCareFieldPosition.java:17 ConcreteDontCareFieldPosition @ 1
+50: Character.java:1053 ConcreteString @ 584
+30: BigInteger.java:2658 ConcreteString @ 3955
+26: Debug.java:37 ConcreteStringBuilder @ 20
+121: StandardCharsets.java:36 ConcreteString[] @ 59
+156: InetAddress.java:829 ConcreteStringBuilder @ 102
+162: Pattern.java:5649 ConcretePattern$JavaDigit @ 489
+14: StandardCharsets.java:46 ConcreteString @ 95
+199: ObjectStreamEncoder$CharsetSE @ -1
+79: TimeZone.java:149 ConcreteHashtable @ 8
+126: JavaParserTokenManager.java:1791 ConcreteString @ 1705
+31: ThreadPoolExecutor.java:286 ConcreteRuntimePermission @ 10
+55: JavaParserTokenManager.java:1791 ConcreteString @ 1733
+9: DateFormat.java:806 ConcreteDateFormat$Field @ 9
+162: InetAddress.java:851 ConcreteInetAddress$2 @ 82
+134: ResourceBundle.java:230 ConcreteObject @ 14
+143: Character.java:1076 ConcreteString[] @ 619
+140: BigDecimal.java:262 ConcreteBigDecimal @ 99
+179: AttributedCharacterIterator.java:141 ConcreteAttributedCharacterIterator$Attribute @ 7
+137: InetAddress.java:214 ConcreteLoadLibraryAction @ 20
+92: JavaParserTokenManager.java:1791 ConcreteString @ 1713
+181: StandardCharsets.java:19 ConcreteString @ 37
+128: SimpleTimeZone.java:1100 Concretebyte[] @ 1
+142: StandardCharsets.java:36 ConcreteString[] @ 59
+80: Pattern.java:5642 ConcreteString @ 435
+103: DateFormat.java:907 ConcreteDateFormat$Field @ 128
+165: StandardCharsets.java:19 ConcreteString @ 37
+106: Debug.java:42 ConcreteString @ 45
+50: InetAddress.java:851 ConcreteInetAddress$2 @ 82
+91: DateFormatSymbols.java:401 ConcreteHashtable @ 1
+89: JavaParserTokenManager.java:1791 ConcreteString @ 1737
+144: InetAddress.java:211 ConcreteGetBooleanAction @ 10
+18: BigDecimal.java:262 ConcreteBigDecimal @ 125
+115: JavaParserTokenManager.java:1791 ConcreteString @ 1677
+153: StandardCharsets.java:46 ConcreteString @ 87
+183: Policy.java:81 ConcreteString @ 2
+165: BigDecimal.java:262 ConcreteBigDecimal @ 138
+192: Pattern.java:5647 ConcretePattern$JavaUpperCase @ 473
+35: DateFormat.java:875 ConcreteString @ 97
+62: Policy.java:81 ConcreteString @ 2
+6: DateFormat.java:806 ConcreteDateFormat$Field @ 9
+81: Pattern.java:5640 ConcreteString @ 417
+5: BigDecimal.java:262 ConcreteBigDecimal @ 10
+61: InetAddress.java:822 ConcreteInetAddressImplFactory @ 45
+189: AttributedCharacterIterator.java:141 ConcreteAttributedCharacterIterator$Attribute @ 7
+129: ObjectHeapByteBuffer @ -1
+21: Objectnull @ -1
+81: DontCareFieldPosition.java:17 ConcreteDontCareFieldPosition @ 1
+23: StandardCharsets.java:19 ConcreteString @ 25
+54: Debug.java:29 ConcreteString @ 12
+108: MessageFormat.java:1315 ConcreteString[] @ 1
+191: BigInteger.java:2377 Concretebyte[] @ 2924
+169: ObjectPrintStream @ -1
+16: StandardCharsets.java:19 ConcreteString @ 33
+48: StandardCharsets.java:41 ConcreteString @ 77
+168: Debug.java:29 ConcreteGetPropertyAction @ 9
+36: StandardCharsets.java:19 ConcreteString @ 25
+65: Policy.java:81 ConcreteString @ 2
+44: ObjectCoderResult @ -1
+87: Pattern.java:5645 ConcretePattern$Ctype @ 456
+50: BigDecimal.java:262 ConcreteBigDecimal @ 34
+11: InetAddress.java:652 ConcreteHashMap @ 40
+126: JavaParserTokenManager.java:1791 ConcreteString @ 1677
+124: DateFormat.java:895 ConcreteString @ 118
+31: DateFormat.java:881 ConcreteDateFormat$Field @ 100
+117: StandardCharsets.java:19 ConcreteString @ 49
+198: ResourceBundle.java:245 ConcreteSoftCache @ 19
+126: InetAddress.java:643 ConcreteInetAddress$Cache @ 33
+82: Character.java:1046 ConcreteCharacter$UnicodeBlock @ 566
+186: AbstractExecutorService.java:26 ConcreteClass @ 2
+11: JavaParserTokenManager.java:1791 ConcreteString @ 1737
+30: Character.java:1076 ConcreteCharacter$UnicodeBlock @ 617
+30: Character.java:1038 ConcreteString[] @ 553
+167: DateFormat.java:895 ConcreteString @ 118
+137: DecimalFormat.java:3166 ConcreteFieldPosition[] @ 8
+107: AbstractExecutorService.java:26 ConcreteClass @ 2
+39: Pattern.java:5646 ConcretePattern$JavaLowerCase @ 465
+180: Character.java:1053 ConcreteString @ 584
+82: InetAddressCachePolicy.java:124 ConcreteString @ 65
+43: InetAddress.java:829 ConcreteString @ 114
+8: BigInteger.java:2951 Concreteint[] @ 2077
+80: BreakIterator.java:366 ConcreteSoftReference[] @ 1
+182: JavaParserTokenManager.java:1791 ConcreteString @ 1737
+99: Pattern.java:5641 ConcreteString @ 426
+171: InetAddress.java:211 ConcreteGetBooleanAction @ 10
+181: DateFormat.java:895 ConcreteString @ 118
+64: DateFormat.java:901 ConcreteString @ 125
+163: ObjectPrintStream @ -1
+140: ObjectPrintStream @ -1
+192: StandardCharsets.java:19 ConcreteString @ 17
+100: StandardCharsets.java:19 ConcreteString @ 13
+119: BigDecimal.java:262 ConcreteBigDecimal @ 10
+157: ObjectPrintStream @ -1
+135: StandardCharsets.java:19 ConcreteString @ 13
+199: Pattern.java:5641 ConcreteString @ 426
+134: SocketPermission.java:215 ConcreteGetBooleanAction @ 3
+133: ObjectFileDescriptor @ -1
+82: BigDecimal.java:262 ConcreteBigDecimal @ 99
+85: InetAddress.java:162 ConcreteClass @ 2
+104: Character.java:1038 ConcreteString @ 563
+151: Pattern.java:5645 ConcretePattern$Ctype @ 456
+144: BigInteger.java:3072 ConcreteObjectStreamField[] @ 2782
+105: BigInteger.java:2658 ConcreteString @ 3955
+89: Character.java:1038 ConcreteString[] @ 553
+178: JavaParserTokenManager.java:1791 ConcreteString @ 1689
+69: ObjectCoderResult @ -1
+118: ThreadPoolExecutor.java:277 ConcreteClass @ 2
+123: FileSystem.java:224 ConcreteString @ 9
+138: BigDecimal.java:262 ConcreteBigDecimal @ 22
+114: Objectnull @ -1
+196: InetAddress.java:640 ConcreteInetAddress$Cache @ 27
+197: DateFormat.java:901 ConcreteDateFormat$Field @ 121
+31: NetworkInterface.java:33 ConcreteString @ 4
+100: DecimalFormat.java:357 ConcreteClass @ 2
+47: Objectbyte[] @ -1
+180: StandardCharsets.java:19 ConcreteString @ 57
+34: Pattern.java:5641 ConcretePattern$Range @ 420
+111: BigDecimal.java:262 ConcreteBigDecimal @ 47
+170: InetAddress.java:822 ConcreteInetAddressImplFactory @ 45
+41: JavaParserTokenManager.java:1791 ConcreteString @ 1697
+137: JavaParserTokenManager.java:1791 ConcreteString @ 1741
+45: DateFormatSymbols.java:401 ConcreteHashtable @ 1
+94: Pattern.java:5644 ConcretePattern$Range @ 447
+54: DecimalFormat.java:3182 ConcreteHashtable @ 10
+92: BigDecimal.java:205 ConcreteClass @ 2
+21: StandardCharsets.java:19 ConcreteString @ 53
+56: BigDecimal.java:262 ConcreteBigDecimal @ 47
+97: Character.java:1053 ConcreteString @ 584
+62: NetworkInterface.java:33 ConcreteString @ 4
+153: BigDecimal.java:262 ConcreteBigDecimal @ 99
+133: Pattern.java:5640 ConcreteString @ 417
+112: Character.java:1038 ConcreteCharacter$UnicodeBlock @ 551
+71: Character.java:1083 ConcreteCharacter$UnicodeBlock @ 632
+134: InetAddress.java:214 ConcreteLoadLibraryAction @ 20
+191: Objectbyte[] @ -1
+20: BigDecimal.java:262 ConcreteBigDecimal @ 125
+48: Pattern.java:5639 ConcreteString @ 408
+170: Pattern.java:5643 ConcretePattern$Ctype @ 438
+185: DecimalFormatSymbols.java:662 ConcreteHashtable @ 1
+151: DateFormatSymbols.java:406 ConcreteHashtable @ 7
+86: FileSystem.java:224 ConcreteString @ 9
+36: TimeUnit.java:40 ConcreteString @ 6
+191: TimeUnit.java:40 ConcreteTimeUnit @ 17
+55: DateFormat.java:888 ConcreteDateFormat$Field @ 107
+110: Pattern.java:5649 ConcreteString @ 494
+57: StandardCharsets.java:46 ConcreteString @ 95
+85: ObjectPrintStream @ -1
+68: FileSystem.java:224 ConcreteString @ 9
+154: TimeZone.java:149 ConcreteHashtable @ 8
+77: JavaParserTokenManager.java:1791 ConcreteString @ 1745
+24: SocketPermission.java:215 ConcreteString @ 6
+41: Pattern.java:5642 ConcretePattern$Ctype @ 429
+10: JavaParserTokenManager.java:1791 ConcreteString @ 1673
+170: BigDecimal.java:262 ConcreteBigDecimal @ 86
+18: Pattern.java:5640 ConcretePattern$Range @ 411
+128: ObjectHeapByteBuffer @ -1
+76: DateFormat.java:888 ConcreteDateFormat$Field @ 107
+136: AttributedCharacterIterator.java:76 ConcreteHashMap @ 1

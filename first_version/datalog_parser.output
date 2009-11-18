@@ -1,0 +1,599 @@
+Terminales no usados en gramática
+
+   _IDENTIFIER2
+
+
+Gramática
+
+    0 $accept: program $end
+
+    1 $@1: /* vacío */
+
+    2 $@2: /* vacío */
+
+    3 program: _DOMAIN_SECTION domains $@1 _RELATION_SECTION relations $@2 _RULE_SECTION rules
+
+    4 domains: domain
+    5        | domains domain
+
+    6 domain: _DOMAIN_ID _NUMBER _FILENAME
+
+    7 relations: /* vacío */
+    8          | relation relations
+
+    9 @3: /* vacío */
+
+   10 relation: _IDENTIFIER _OPAR parameter_list @3 _CPAR relation_end
+
+   11 relation_end: _IONATURE
+   12             | /* vacío */
+
+   13 @4: /* vacío */
+
+   14 parameter_list: _IDENTIFIER _COLON _IDENTIFIER @4 parameter_tail
+
+   15 parameter_tail: /* vacío */
+   16               | _COMMA parameter_list
+
+   17 rules: /* vacío */
+   18      | clause rules
+
+   19 clause: atom tail _END_OF_RULE
+
+   20 literal: _IDENTIFIER parenthesized_list
+
+   21 atom: _IDENTIFIER parenthesized_list
+
+   22 parenthesized_list: _OPAR argument_list _CPAR
+
+   23 argument_list: term argument_tail
+
+   24 argument_tail: /* vacío */
+   25              | _COMMA argument_list
+
+   26 term: _IDENTIFIER
+
+   27 tail: /* vacío */
+   28     | _IS_IMPLIED_BY literal_list
+
+   29 literal_list: literal literal_tail
+
+   30 literal_tail: /* vacío */
+   31             | _COMMA literal_list
+
+
+Terminales con las reglas donde aparecen
+
+$end (0) 0
+error (256)
+_IS_IMPLIED_BY (258) 28
+_END_OF_RULE (259) 19
+_OPAR (260) 10 22
+_CPAR (261) 10 22
+_COMMA (262) 16 25 31
+_COLON (263) 14
+_DOMAIN_SECTION (264) 3
+_RELATION_SECTION (265) 3
+_RULE_SECTION (266) 3
+_DOMAIN_ID (267) 6
+_NUMBER (268) 6
+_FILENAME (269) 6
+_IONATURE (270) 11
+_IDENTIFIER (271) 10 14 20 21 26
+_IDENTIFIER2 (272)
+
+
+No terminales con las reglas donde aparecen
+
+$accept (18)
+    en la izquierda: 0
+program (19)
+    en la izquierda: 3, en la derecha: 0
+$@1 (20)
+    en la izquierda: 1, en la derecha: 3
+$@2 (21)
+    en la izquierda: 2, en la derecha: 3
+domains (22)
+    en la izquierda: 4 5, en la derecha: 3 5
+domain (23)
+    en la izquierda: 6, en la derecha: 4 5
+relations (24)
+    en la izquierda: 7 8, en la derecha: 3 8
+relation (25)
+    en la izquierda: 10, en la derecha: 8
+@3 (26)
+    en la izquierda: 9, en la derecha: 10
+relation_end (27)
+    en la izquierda: 11 12, en la derecha: 10
+parameter_list (28)
+    en la izquierda: 14, en la derecha: 10 16
+@4 (29)
+    en la izquierda: 13, en la derecha: 14
+parameter_tail (30)
+    en la izquierda: 15 16, en la derecha: 14
+rules (31)
+    en la izquierda: 17 18, en la derecha: 3 18
+clause (32)
+    en la izquierda: 19, en la derecha: 18
+literal (33)
+    en la izquierda: 20, en la derecha: 29
+atom (34)
+    en la izquierda: 21, en la derecha: 19
+parenthesized_list (35)
+    en la izquierda: 22, en la derecha: 20 21
+argument_list (36)
+    en la izquierda: 23, en la derecha: 22 25
+argument_tail (37)
+    en la izquierda: 24 25, en la derecha: 23
+term (38)
+    en la izquierda: 26, en la derecha: 23
+tail (39)
+    en la izquierda: 27 28, en la derecha: 19
+literal_list (40)
+    en la izquierda: 29, en la derecha: 28 31
+literal_tail (41)
+    en la izquierda: 30 31, en la derecha: 29
+
+
+estado 0
+
+    0 $accept: . program $end
+
+    _DOMAIN_SECTION  desplazar e ir al estado 1
+
+    program  ir al estado 2
+
+
+estado 1
+
+    3 program: _DOMAIN_SECTION . domains $@1 _RELATION_SECTION relations $@2 _RULE_SECTION rules
+
+    _DOMAIN_ID  desplazar e ir al estado 3
+
+    domains  ir al estado 4
+    domain   ir al estado 5
+
+
+estado 2
+
+    0 $accept: program . $end
+
+    $end  desplazar e ir al estado 6
+
+
+estado 3
+
+    6 domain: _DOMAIN_ID . _NUMBER _FILENAME
+
+    _NUMBER  desplazar e ir al estado 7
+
+
+estado 4
+
+    3 program: _DOMAIN_SECTION domains . $@1 _RELATION_SECTION relations $@2 _RULE_SECTION rules
+    5 domains: domains . domain
+
+    _DOMAIN_ID  desplazar e ir al estado 3
+
+    $default  reduce usando la regla 1 ($@1)
+
+    $@1     ir al estado 8
+    domain  ir al estado 9
+
+
+estado 5
+
+    4 domains: domain .
+
+    $default  reduce usando la regla 4 (domains)
+
+
+estado 6
+
+    0 $accept: program $end .
+
+    $default  aceptar
+
+
+estado 7
+
+    6 domain: _DOMAIN_ID _NUMBER . _FILENAME
+
+    _FILENAME  desplazar e ir al estado 10
+
+
+estado 8
+
+    3 program: _DOMAIN_SECTION domains $@1 . _RELATION_SECTION relations $@2 _RULE_SECTION rules
+
+    _RELATION_SECTION  desplazar e ir al estado 11
+
+
+estado 9
+
+    5 domains: domains domain .
+
+    $default  reduce usando la regla 5 (domains)
+
+
+estado 10
+
+    6 domain: _DOMAIN_ID _NUMBER _FILENAME .
+
+    $default  reduce usando la regla 6 (domain)
+
+
+estado 11
+
+    3 program: _DOMAIN_SECTION domains $@1 _RELATION_SECTION . relations $@2 _RULE_SECTION rules
+
+    _IDENTIFIER  desplazar e ir al estado 12
+
+    $default  reduce usando la regla 7 (relations)
+
+    relations  ir al estado 13
+    relation   ir al estado 14
+
+
+estado 12
+
+   10 relation: _IDENTIFIER . _OPAR parameter_list @3 _CPAR relation_end
+
+    _OPAR  desplazar e ir al estado 15
+
+
+estado 13
+
+    3 program: _DOMAIN_SECTION domains $@1 _RELATION_SECTION relations . $@2 _RULE_SECTION rules
+
+    $default  reduce usando la regla 2 ($@2)
+
+    $@2  ir al estado 16
+
+
+estado 14
+
+    8 relations: relation . relations
+
+    _IDENTIFIER  desplazar e ir al estado 12
+
+    $default  reduce usando la regla 7 (relations)
+
+    relations  ir al estado 17
+    relation   ir al estado 14
+
+
+estado 15
+
+   10 relation: _IDENTIFIER _OPAR . parameter_list @3 _CPAR relation_end
+
+    _IDENTIFIER  desplazar e ir al estado 18
+
+    parameter_list  ir al estado 19
+
+
+estado 16
+
+    3 program: _DOMAIN_SECTION domains $@1 _RELATION_SECTION relations $@2 . _RULE_SECTION rules
+
+    _RULE_SECTION  desplazar e ir al estado 20
+
+
+estado 17
+
+    8 relations: relation relations .
+
+    $default  reduce usando la regla 8 (relations)
+
+
+estado 18
+
+   14 parameter_list: _IDENTIFIER . _COLON _IDENTIFIER @4 parameter_tail
+
+    _COLON  desplazar e ir al estado 21
+
+
+estado 19
+
+   10 relation: _IDENTIFIER _OPAR parameter_list . @3 _CPAR relation_end
+
+    $default  reduce usando la regla 9 (@3)
+
+    @3  ir al estado 22
+
+
+estado 20
+
+    3 program: _DOMAIN_SECTION domains $@1 _RELATION_SECTION relations $@2 _RULE_SECTION . rules
+
+    _IDENTIFIER  desplazar e ir al estado 23
+
+    $default  reduce usando la regla 17 (rules)
+
+    rules   ir al estado 24
+    clause  ir al estado 25
+    atom    ir al estado 26
+
+
+estado 21
+
+   14 parameter_list: _IDENTIFIER _COLON . _IDENTIFIER @4 parameter_tail
+
+    _IDENTIFIER  desplazar e ir al estado 27
+
+
+estado 22
+
+   10 relation: _IDENTIFIER _OPAR parameter_list @3 . _CPAR relation_end
+
+    _CPAR  desplazar e ir al estado 28
+
+
+estado 23
+
+   21 atom: _IDENTIFIER . parenthesized_list
+
+    _OPAR  desplazar e ir al estado 29
+
+    parenthesized_list  ir al estado 30
+
+
+estado 24
+
+    3 program: _DOMAIN_SECTION domains $@1 _RELATION_SECTION relations $@2 _RULE_SECTION rules .
+
+    $default  reduce usando la regla 3 (program)
+
+
+estado 25
+
+   18 rules: clause . rules
+
+    _IDENTIFIER  desplazar e ir al estado 23
+
+    $default  reduce usando la regla 17 (rules)
+
+    rules   ir al estado 31
+    clause  ir al estado 25
+    atom    ir al estado 26
+
+
+estado 26
+
+   19 clause: atom . tail _END_OF_RULE
+
+    _IS_IMPLIED_BY  desplazar e ir al estado 32
+
+    $default  reduce usando la regla 27 (tail)
+
+    tail  ir al estado 33
+
+
+estado 27
+
+   14 parameter_list: _IDENTIFIER _COLON _IDENTIFIER . @4 parameter_tail
+
+    $default  reduce usando la regla 13 (@4)
+
+    @4  ir al estado 34
+
+
+estado 28
+
+   10 relation: _IDENTIFIER _OPAR parameter_list @3 _CPAR . relation_end
+
+    _IONATURE  desplazar e ir al estado 35
+
+    $default  reduce usando la regla 12 (relation_end)
+
+    relation_end  ir al estado 36
+
+
+estado 29
+
+   22 parenthesized_list: _OPAR . argument_list _CPAR
+
+    _IDENTIFIER  desplazar e ir al estado 37
+
+    argument_list  ir al estado 38
+    term           ir al estado 39
+
+
+estado 30
+
+   21 atom: _IDENTIFIER parenthesized_list .
+
+    $default  reduce usando la regla 21 (atom)
+
+
+estado 31
+
+   18 rules: clause rules .
+
+    $default  reduce usando la regla 18 (rules)
+
+
+estado 32
+
+   28 tail: _IS_IMPLIED_BY . literal_list
+
+    _IDENTIFIER  desplazar e ir al estado 40
+
+    literal       ir al estado 41
+    literal_list  ir al estado 42
+
+
+estado 33
+
+   19 clause: atom tail . _END_OF_RULE
+
+    _END_OF_RULE  desplazar e ir al estado 43
+
+
+estado 34
+
+   14 parameter_list: _IDENTIFIER _COLON _IDENTIFIER @4 . parameter_tail
+
+    _COMMA  desplazar e ir al estado 44
+
+    $default  reduce usando la regla 15 (parameter_tail)
+
+    parameter_tail  ir al estado 45
+
+
+estado 35
+
+   11 relation_end: _IONATURE .
+
+    $default  reduce usando la regla 11 (relation_end)
+
+
+estado 36
+
+   10 relation: _IDENTIFIER _OPAR parameter_list @3 _CPAR relation_end .
+
+    $default  reduce usando la regla 10 (relation)
+
+
+estado 37
+
+   26 term: _IDENTIFIER .
+
+    $default  reduce usando la regla 26 (term)
+
+
+estado 38
+
+   22 parenthesized_list: _OPAR argument_list . _CPAR
+
+    _CPAR  desplazar e ir al estado 46
+
+
+estado 39
+
+   23 argument_list: term . argument_tail
+
+    _COMMA  desplazar e ir al estado 47
+
+    $default  reduce usando la regla 24 (argument_tail)
+
+    argument_tail  ir al estado 48
+
+
+estado 40
+
+   20 literal: _IDENTIFIER . parenthesized_list
+
+    _OPAR  desplazar e ir al estado 29
+
+    parenthesized_list  ir al estado 49
+
+
+estado 41
+
+   29 literal_list: literal . literal_tail
+
+    _COMMA  desplazar e ir al estado 50
+
+    $default  reduce usando la regla 30 (literal_tail)
+
+    literal_tail  ir al estado 51
+
+
+estado 42
+
+   28 tail: _IS_IMPLIED_BY literal_list .
+
+    $default  reduce usando la regla 28 (tail)
+
+
+estado 43
+
+   19 clause: atom tail _END_OF_RULE .
+
+    $default  reduce usando la regla 19 (clause)
+
+
+estado 44
+
+   16 parameter_tail: _COMMA . parameter_list
+
+    _IDENTIFIER  desplazar e ir al estado 18
+
+    parameter_list  ir al estado 52
+
+
+estado 45
+
+   14 parameter_list: _IDENTIFIER _COLON _IDENTIFIER @4 parameter_tail .
+
+    $default  reduce usando la regla 14 (parameter_list)
+
+
+estado 46
+
+   22 parenthesized_list: _OPAR argument_list _CPAR .
+
+    $default  reduce usando la regla 22 (parenthesized_list)
+
+
+estado 47
+
+   25 argument_tail: _COMMA . argument_list
+
+    _IDENTIFIER  desplazar e ir al estado 37
+
+    argument_list  ir al estado 53
+    term           ir al estado 39
+
+
+estado 48
+
+   23 argument_list: term argument_tail .
+
+    $default  reduce usando la regla 23 (argument_list)
+
+
+estado 49
+
+   20 literal: _IDENTIFIER parenthesized_list .
+
+    $default  reduce usando la regla 20 (literal)
+
+
+estado 50
+
+   31 literal_tail: _COMMA . literal_list
+
+    _IDENTIFIER  desplazar e ir al estado 40
+
+    literal       ir al estado 41
+    literal_list  ir al estado 54
+
+
+estado 51
+
+   29 literal_list: literal literal_tail .
+
+    $default  reduce usando la regla 29 (literal_list)
+
+
+estado 52
+
+   16 parameter_tail: _COMMA parameter_list .
+
+    $default  reduce usando la regla 16 (parameter_tail)
+
+
+estado 53
+
+   25 argument_tail: _COMMA argument_list .
+
+    $default  reduce usando la regla 25 (argument_tail)
+
+
+estado 54
+
+   31 literal_tail: _COMMA literal_list .
+
+    $default  reduce usando la regla 31 (literal_tail)

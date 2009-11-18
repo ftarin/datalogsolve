@@ -1,0 +1,7 @@
+El script run.sh ejecuta los test para los diversos resolutores y con los datos
+obtenidos genera una grafica almacenada en el fichero resultado.eps.
+Por defecto obtiene los datos de ../data y guarda los resultados en ../results,
+esto se puede editar en cada uno de los scripts que generan los datos.
+Si los binarios de los diferentes resolutores estan en el path basta con ejecutar
+el script sino hay que editar cada uno de los diferentes scripts y añadir el path
+al binario.

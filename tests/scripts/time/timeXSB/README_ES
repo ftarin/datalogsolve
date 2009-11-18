@@ -1,0 +1,6 @@
+1 Ubicar el directorio "timeXSB" en la siguiente ubicación ?/XSB/bin/
+2 Copiar dentro del directiorio "timeXSB" los ficheros de los cuales se quiere medir los tiempos
+3 Ejecutar el programa ./scriptTimeXSB
+4 Los resultados se generarán en el directorio /timeXSB/Time
+
+Nota: Posiblemente sea necesario darle permisos de ejecución al fichero scriptTimeXSB

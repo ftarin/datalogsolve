@@ -1,0 +1,4 @@
+1 - Put the folder 'timeXSB' into the directory /XSB/bin/ 
+2 - Put into the folder 'timeXSB' the files you want to measure.
+3 - Run ./scriptTimeXSB (execution permission must be granted)
+4 - The results will be generated in the directory /timeXSB/Time

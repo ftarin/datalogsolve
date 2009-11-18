@@ -1,0 +1,12 @@
+Test 1
+| ?- % 0.508 CPU in 0.57 seconds (89% CPU)
+
+
+Test 2
+| ?- % 0.536 CPU in 0.571 seconds (93% CPU)
+
+
+Test 3
+| ?- % 0.532 CPU in 0.58 seconds (91% CPU)
+
+

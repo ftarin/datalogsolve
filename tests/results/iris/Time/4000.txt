@@ -1,0 +1,15 @@
+Test 1
+
+Query:      ?- vP(?X, ?Y). ==>> 40401 rows in 533ms
+
+
+Test 2
+
+Query:      ?- vP(?X, ?Y). ==>> 40401 rows in 543ms
+
+
+Test 3
+
+Query:      ?- vP(?X, ?Y). ==>> 40401 rows in 535ms
+
+

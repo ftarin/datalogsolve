@@ -1,0 +1,13 @@
+1. Put into the directory timeDatalaude/Files the folder with the test files.
+2. Run './scriptTimeDatalaude' (execution permission must be granted)
+3. The files will be generated in ./Time
+
+---
+
+If the script doesn't work, try to replace the following line:
+
+maude.linux $j/kk | grep "rewrites" >> ./Time/$fichero.txt;
+
+with this one:
+
+maude $j/kk | grep "rewrites" >> ./Time/$fichero.txt;

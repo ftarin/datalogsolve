@@ -1,0 +1,369 @@
+/******************************************************************************
+ *                    C A E S A R _ D A T A L O G _ 1               
+ *-----------------------------------------------------------------------------
+ *   Technical University of Valencia
+ *   DSIC / ELP
+ *   Camino de Vera s/n
+ *   46022 Valencia
+ *   SPAIN
+ *-----------------------------------------------------------------------------
+ *   Module             :       %M%
+ *   Authors            :       Maria ALPUENTE, Marco FELIU, Christophe JOUBERT
+ *                              and Alicia VILLANUEVA
+ *   Version            :       %R%.%L%
+ *   Date               :       %E% %U%
+ *****************************************************************************/
+
+#include "datalog_combination_table.h"
+#include "datalog_relation_table.h"
+#include "datalog_variable_table.h"
+
+/*------------------------------------------------------------------------------*/
+/* Construction of the combinations tables */
+
+CAESAR_TYPE_NATURAL COMBINATION_SIZE(CAESAR_TYPE_NATURAL ARITY)
+{
+	CAESAR_TYPE_NATURAL INDEXES_SIZE;
+	CAESAR_TYPE_NATURAL FLAGS_SIZE;
+
+	/* Size of the indexes */
+	INDEXES_SIZE = sizeof(CAESAR_TYPE_INDEX_TABLE_1) * ARITY;
+
+	/* Size of the IS_VARIABLE bit flags for all the indexes */
+	if ((ARITY % 8) == 0)
+		/* The flags perfectly fit in a number of fully used bytes */
+		FLAGS_SIZE = ARITY / 8;
+	else
+		/* We have to add a not fully used byte */
+		FLAGS_SIZE = ARITY / 8 + 1;
+
+	/* The size of the entry will be the sum of those of the indexes
+	 * and flags */
+	return INDEXES_SIZE + FLAGS_SIZE;
+}
+
+void COMBINATION_TABLE_BUILD(CAESAR_TYPE_TABLE_1 *COMBINATION_TABLE_POINTER,
+		CAESAR_TYPE_NATURAL ARITY)
+{
+	CAESAR_TYPE_AREA_1 BASE_AREA;
+	CAESAR_TYPE_AREA_1 MARK_AREA;
+	CAESAR_TYPE_TABLE_1 COMBINATION_TABLE;
+
+	BASE_AREA = CAESAR_BYTE_AREA_1(COMBINATION_SIZE(ARITY));
+	MARK_AREA = CAESAR_EMPTY_AREA_1();
+
+	CAESAR_CREATE_TABLE_1( &COMBINATION_TABLE, BASE_AREA, MARK_AREA, 0, /* LIMIT_SIZE by default */
+	0, /* HASH_SIZE by default */
+	CAESAR_TRUE, /* Sets HASH_SIZE to its nearest prime number  */
+	NULL, /* COMPARE_FUNCTION */
+	NULL, /* HASH_FUNCTION *//* TODO: PUT THE CAESAR_7_HASH */
+	NULL, /* PRINT_FUNCTION */
+	CAESAR_OVERFLOW_ABORT_TABLE_1 /* OVERFLOW_FUNCTION */
+	);
+
+	/* Return the table */
+	*COMBINATION_TABLE_POINTER = COMBINATION_TABLE;
+}
+
+void COMBINATION_SET_VALUE_AT(CAESAR_TYPE_POINTER COMBINATION,
+		CAESAR_TYPE_NATURAL INDEX, CAESAR_TYPE_NATURAL ARITY,
+		CAESAR_TYPE_INDEX_TABLE_1 TABLE_INDEX, CAESAR_TYPE_BOOLEAN IS_VARIABLE)
+{
+	/* If INDEX == ARITY then we are changing the TRUTH VALUE of the
+	 * combination */
+	CAESAR_TYPE_NATURAL END_OF_INDEXES_OFFSET;
+	CAESAR_TYPE_NATURAL INDEX_OFFSET;
+	CAESAR_TYPE_POINTER BYTE_BASE_POINTER;
+
+	/* The index must always be lower than the arity */
+	CAESAR_ASSERT(INDEX < ARITY);
+
+	/* TODO : Here we must provide a way to change the truth value of
+	 * the combination or decide to do something else. The fact is that we
+	 * have decided to store the facts in other place */
+
+	INDEX_OFFSET = sizeof(CAESAR_TYPE_INDEX_TABLE_1) * INDEX;
+	END_OF_INDEXES_OFFSET = sizeof(CAESAR_TYPE_INDEX_TABLE_1) * ARITY;
+
+	/* Change of an entry's index */
+	*( (CAESAR_TYPE_INDEX_TABLE_1 *) (COMBINATION + INDEX_OFFSET) )
+			= TABLE_INDEX;
+
+	BYTE_BASE_POINTER = COMBINATION + END_OF_INDEXES_OFFSET;
+	BYTE_BASE_POINTER += INDEX / 8;
+	if (IS_VARIABLE == CAESAR_TRUE)
+	{
+		/* Sets the variable flag */
+		(*BYTE_BASE_POINTER) |= ((CAESAR_TYPE_BYTE) 1 << (INDEX % 8));
+	}
+	else
+	{
+		/* Unsets the variable flag */
+		(*BYTE_BASE_POINTER) &= (((CAESAR_TYPE_BYTE) 255)
+				- ((CAESAR_TYPE_BYTE) 1 << (INDEX % 8)));
+	}
+}
+
+void COMBINATION_GET_VALUE_AT(CAESAR_TYPE_POINTER COMBINATION_TABLE_ENTRY,
+		CAESAR_TYPE_NATURAL INDEX, CAESAR_TYPE_NATURAL ARITY,
+		CAESAR_TYPE_INDEX_TABLE_1 *TABLE_INDEX,
+		CAESAR_TYPE_BOOLEAN *IS_VARIABLE)
+{
+	CAESAR_TYPE_NATURAL END_OF_INDEXES_OFFSET;
+	CAESAR_TYPE_NATURAL INDEX_OFFSET;
+	CAESAR_TYPE_POINTER BYTE_BASE_POINTER;
+
+	/* The index must always be lower than the arity */
+	CAESAR_ASSERT(INDEX < ARITY);
+
+	INDEX_OFFSET = sizeof(CAESAR_TYPE_INDEX_TABLE_1) * INDEX;
+	END_OF_INDEXES_OFFSET = sizeof(CAESAR_TYPE_INDEX_TABLE_1) * ARITY;
+
+	/* Looking-up of an entry's index */
+	*TABLE_INDEX = *( (CAESAR_TYPE_INDEX_TABLE_1 *) (COMBINATION_TABLE_ENTRY
+			+ INDEX_OFFSET) );
+
+	BYTE_BASE_POINTER = COMBINATION_TABLE_ENTRY + END_OF_INDEXES_OFFSET;
+	BYTE_BASE_POINTER += INDEX / 8;
+	if ( ( ((CAESAR_TYPE_BYTE) *BYTE_BASE_POINTER) & ((CAESAR_TYPE_BYTE) (1
+			<< (INDEX % 8))) ) > ((CAESAR_TYPE_BYTE) 0))
+		*IS_VARIABLE = CAESAR_TRUE;
+	else
+		*IS_VARIABLE = CAESAR_FALSE;
+}
+
+CAESAR_TYPE_BOOLEAN COMBINATION_IS_CONCRETIZATION_OF(
+		CAESAR_TYPE_POINTER concrete_combination, CAESAR_TYPE_NATURAL arity,
+		CAESAR_TYPE_POINTER general_combination)
+{
+	CAESAR_TYPE_NATURAL i;
+	CAESAR_TYPE_INDEX_TABLE_1 general_value;
+	CAESAR_TYPE_BOOLEAN general_value_is_variable;
+	CAESAR_TYPE_INDEX_TABLE_1 concrete_value;
+	CAESAR_TYPE_BOOLEAN concrete_value_is_variable;
+
+	for (i = 0; i < arity; i++)
+	{
+		COMBINATION_GET_VALUE_AT(general_combination, i, arity, &general_value,
+				&general_value_is_variable);
+		COMBINATION_GET_VALUE_AT(concrete_combination, i, arity,
+				&concrete_value, &concrete_value_is_variable);
+
+		if (!general_value_is_variable)
+		{
+			if (concrete_value_is_variable)
+			{
+				CAESAR_ERROR("ERROR: On COMBINATION_IS_CONCRETIZATION_OF(...) : Concretization given is not more concrete");
+				return CAESAR_FALSE;
+			}
+			if (concrete_value != general_value)
+			{
+				return CAESAR_FALSE;
+			}
+		}
+	}
+	return CAESAR_TRUE;
+}
+
+CAESAR_TYPE_BOOLEAN FACT_IS_CONCRETIZATION_OF(
+		CAESAR_TYPE_POINTER concrete_combination, CAESAR_TYPE_NATURAL arity,
+		CAESAR_TYPE_POINTER general_combination)
+{
+	CAESAR_TYPE_NATURAL i;
+	CAESAR_TYPE_INDEX_TABLE_1 general_value;
+	CAESAR_TYPE_BOOLEAN general_value_is_variable;
+	CAESAR_TYPE_INDEX_TABLE_1 concrete_value;
+	CAESAR_TYPE_BOOLEAN concrete_value_is_variable;
+
+	for (i = 0; i < arity; i++)
+	{
+		COMBINATION_GET_VALUE_AT(general_combination, i, arity, &general_value,
+				&general_value_is_variable);
+		COMBINATION_GET_VALUE_AT(concrete_combination, i, arity,
+				&concrete_value, &concrete_value_is_variable);
+
+		if (!general_value_is_variable)
+		{
+			if (concrete_value != general_value)
+			{
+				return CAESAR_FALSE;
+			}
+		}
+	}
+	return CAESAR_TRUE;
+}
+
+
+/*------------------------------------------------------------------------------*/
+/* Get a combination entry by index */
+void COMBINATION_TABLE_GET_ENTRY_BY_INDEX(
+		CAESAR_TYPE_TABLE_1 COMBINATION_TABLE, CAESAR_TYPE_INDEX_TABLE_1 INDEX,
+		CAESAR_TYPE_NATURAL ARITY,
+		CAESAR_TYPE_COMBINATION_TABLE_ENTRY COMBINATION)
+{
+	CAESAR_TYPE_POINTER BASE;
+	CAESAR_TYPE_NATURAL i;
+
+	CAESAR_RETRIEVE_I_B_TABLE_1(COMBINATION_TABLE, INDEX, &BASE);
+
+	COMBINATION->LENGTH = ARITY;
+
+	for (i = 0; i < ARITY; i++)
+	{
+		COMBINATION_GET_VALUE_AT(BASE, i, ARITY, &(COMBINATION->ARGUMENTS[i]),
+				&(COMBINATION->ARGUMENT_IS_VARIABLE[i]));
+	}
+}
+
+void COMBINATION_TABLE_GET_BINARY_ENTRY_BY_INDEX(
+		CAESAR_TYPE_TABLE_1 COMBINATION_TABLE, CAESAR_TYPE_INDEX_TABLE_1 INDEX,
+		CAESAR_TYPE_POINTER *COMBINATION)
+{
+	CAESAR_RETRIEVE_I_B_TABLE_1(COMBINATION_TABLE, INDEX, COMBINATION);
+}
+
+void COMBINATION_PRINT(CAESAR_TYPE_INDEX_TABLE_1 RELATION_INDEX,
+		CAESAR_TYPE_INDEX_TABLE_1 COMBINATION_INDEX)
+{
+	CAESAR_TYPE_NATURAL i;
+	CAESAR_TYPE_STRING STRING;
+
+	CAESAR_BODY_RELATION_TABLE_ENTRY RELATION_BODY;
+	CAESAR_TYPE_RELATION_TABLE_ENTRY RELATION;
+	RELATION = &RELATION_BODY;
+
+	CAESAR_BODY_COMBINATION_TABLE_ENTRY COMBINATION_BODY;
+	CAESAR_TYPE_COMBINATION_TABLE_ENTRY COMBINATION;
+	COMBINATION = &COMBINATION_BODY;
+
+	CAESAR_DATALOG_GET_RELATION_BY_INDEX(RELATION_INDEX, RELATION);
+
+	CAESAR_CREATE(COMBINATION->ARGUMENTS, RELATION->ARITY * sizeof(CAESAR_TYPE_INDEX_TABLE_1), CAESAR_TYPE_INDEX_TABLE_1 *);
+	CAESAR_CREATE(COMBINATION
+			->ARGUMENT_IS_VARIABLE, RELATION->ARITY * sizeof(CAESAR_TYPE_BOOLEAN), CAESAR_TYPE_BOOLEAN *);
+	COMBINATION_TABLE_GET_ENTRY_BY_INDEX(RELATION->COMBINATIONS,
+			COMBINATION_INDEX, RELATION->ARITY, COMBINATION);
+
+	printf("%s(", RELATION->NAME);
+	i = 0;
+	if (i < RELATION->ARITY)
+	{
+		if (COMBINATION->ARGUMENT_IS_VARIABLE[i] == CAESAR_TRUE)
+		{
+			CAESAR_DATALOG_GET_VARIABLE_BY_INDEX(COMBINATION->ARGUMENTS[i],
+					&STRING);
+			printf("%s", STRING);
+		}
+		else
+		{
+
+			/* TODO: CAESAR_DATALOG_GET_DOMAIN_ELEMENT_BY_INDICES(RELATION->DOMAINS[i], COMBINATION->ARGUMENTS[i], &STRING); */
+			STRING="TODO";
+			printf("%s", STRING);
+		}
+	}
+	for (i = 1; i < RELATION->ARITY; i++)
+		if (COMBINATION->ARGUMENT_IS_VARIABLE[i] == CAESAR_TRUE)
+		{
+			CAESAR_DATALOG_GET_VARIABLE_BY_INDEX(COMBINATION->ARGUMENTS[i],
+					&STRING);
+			printf(",%s", STRING);
+		}
+		else
+		{
+			/* TODO: CAESAR_DATALOG_GET_DOMAIN_ELEMENT_BY_INDICES(RELATION->DOMAINS[i], COMBINATION->ARGUMENTS[i], &STRING);*/
+			STRING="TODO";
+			printf(",%s", STRING);
+		}
+
+	printf(")");
+	CAESAR_DELETE(COMBINATION->ARGUMENTS);
+	CAESAR_DELETE(COMBINATION->ARGUMENT_IS_VARIABLE);
+}
+
+void COMBINATION_TABLE_PRINT(CAESAR_TYPE_FILE FILE, CAESAR_TYPE_TABLE_1 TABLE,
+		CAESAR_TYPE_NATURAL ARITY)
+{
+	CAESAR_TYPE_INDEX_TABLE_1 ENTRY_INDEX;
+	CAESAR_TYPE_INDEX_TABLE_1 ENTRY_MEMBER_INDEX;
+	CAESAR_TYPE_INDEX_TABLE_1 TABLE_INDEX;
+	CAESAR_TYPE_INDEX_TABLE_1 MAXIMUM;
+	CAESAR_TYPE_BOOLEAN IS_VARIABLE;
+	CAESAR_TYPE_POINTER ENTRY;
+
+	fprintf(FILE, "Combination Table:\n");
+
+	/* We get the maximum index */
+	MAXIMUM = CAESAR_PUT_INDEX_TABLE_1(TABLE);
+
+	/* We iterate through all the indexes */
+	for (TABLE_INDEX = 0; TABLE_INDEX < MAXIMUM; TABLE_INDEX++)
+	{
+		fprintf(FILE, "\n[BASE %02d]", TABLE_INDEX);
+
+		/* We get the address of each index's entry */
+		CAESAR_RETRIEVE_I_B_TABLE_1(TABLE, TABLE_INDEX, &ENTRY);
+
+		/* We iterate through each index's member */
+		for (ENTRY_INDEX = 0; ENTRY_INDEX < ARITY; ENTRY_INDEX++)
+		{
+
+			COMBINATION_GET_VALUE_AT(ENTRY, ENTRY_INDEX, ARITY,
+					&ENTRY_MEMBER_INDEX, &IS_VARIABLE);
+
+			if (IS_VARIABLE == CAESAR_TRUE)
+				fprintf(FILE, "\tVar. %d", ENTRY_MEMBER_INDEX);
+			else
+				fprintf(FILE, "\tCnt. %d", ENTRY_MEMBER_INDEX);
+		}
+	}
+
+	fprintf(FILE, "\n\n");
+}
+
+CAESAR_TYPE_BOOLEAN COMBINATION_TABLE_ADD_ENTRY(
+		CAESAR_TYPE_TABLE_1 COMBINATION_TABLE, CAESAR_TYPE_INDEX_TABLE_1 *INDEX)
+{
+	CAESAR_TYPE_POINTER EXISTING_ENTRY_POINTER;
+
+	return CAESAR_SEARCH_AND_PUT_TABLE_1(COMBINATION_TABLE, INDEX,
+			&EXISTING_ENTRY_POINTER);
+}
+
+void COMBINATION_TABLE_NEW_ENTRY(CAESAR_TYPE_TABLE_1 COMBINATION_TABLE,
+		CAESAR_TYPE_POINTER *COMBINATION_TABLE_ENTRY)
+{
+	*COMBINATION_TABLE_ENTRY = CAESAR_PUT_BASE_TABLE_1(COMBINATION_TABLE);
+}
+
+CAESAR_TYPE_BOOLEAN COMBINATION_TABLE_ADD_ENTRY_COPY(
+		CAESAR_TYPE_TABLE_1 COMBINATION_TABLE,
+		CAESAR_TYPE_POINTER OUTTER_ENTRY, CAESAR_TYPE_NATURAL ARITY,
+		CAESAR_TYPE_INDEX_TABLE_1 *INDEX)
+{
+	CAESAR_TYPE_POINTER EXISTING_ENTRY_POINTER;
+	CAESAR_TYPE_POINTER INNER_ENTRY;
+
+	COMBINATION_TABLE_NEW_ENTRY(COMBINATION_TABLE, &INNER_ENTRY);
+	memcpy(INNER_ENTRY, OUTTER_ENTRY, COMBINATION_SIZE(ARITY) );
+
+	return CAESAR_SEARCH_AND_PUT_TABLE_1(COMBINATION_TABLE, INDEX,
+			&EXISTING_ENTRY_POINTER);
+}
+
+void COMBINATION_TABLE_ADD_NONPACKED_ENTRY(
+		CAESAR_TYPE_TABLE_1 COMBINATION_TABLE,
+		CAESAR_TYPE_COMBINATION_TABLE_ENTRY NONPACKED_COMBINATION,
+		CAESAR_TYPE_INDEX_TABLE_1 *INDEX)
+{
+	CAESAR_TYPE_POINTER COMBINATION;
+	CAESAR_TYPE_NATURAL i;
+	COMBINATION_TABLE_NEW_ENTRY(COMBINATION_TABLE, &COMBINATION);
+	for (i=0; i < NONPACKED_COMBINATION->LENGTH; i++)
+	{
+		COMBINATION_SET_VALUE_AT(COMBINATION, i, NONPACKED_COMBINATION->LENGTH,
+				NONPACKED_COMBINATION->ARGUMENTS[i],
+				NONPACKED_COMBINATION->ARGUMENT_IS_VARIABLE[i]);
+	}
+	COMBINATION_TABLE_ADD_ENTRY(COMBINATION_TABLE, INDEX);
+}
