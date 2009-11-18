@@ -3,7 +3,7 @@ automatable method to evaluate Datalog queries by using Boolean Equation
 Systems (BESs).
 
 The webpage can be reached at:
-	http://safe-tools.dsic.upv.es/datalog/
+	http://safe-tools.dsic.upv.es/datalog_solve/
 
 To build the software just enter at first_version or optimized_version
 and do:
